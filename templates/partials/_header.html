@@ -1,0 +1,40 @@
+<div class="ftco-blocks-cover-1">
+  <div class="ftco-cover-1 overlay main_header--bg">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <div class="feature-car-rent-box-1">
+            {% if rnd_car %}
+                <h3>{{rnd_car.vendor}} {{rnd_car.model}}</h3>
+                <ul class="list-unstyled">
+                    <li>
+                        <span>Doors</span>
+                        <span class="spec">{{rnd_car.doors}}</span>
+                    </li>
+                    <li>
+                        <span>Seats</span>
+                        <span class="spec">{{rnd_car.seats}}</span>
+                    </li>
+                    <li>
+                        <span>Luggage</span>
+                        <span class="spec">2 Suitcase/2 Bags</span>
+                    </li>
+                    <li>
+                        <span>Transmission</span>
+                        <span class="spec">{{rnd_car.transmission}}</span>
+                    </li>
+                    <li>
+                        <span>Minium age</span>
+                        <span class="spec">{{rnd_car.minimum_age}}</span>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center bg-light p-3">
+                    <span style="color: red;">${{rnd_car.price}}/day</span>
+                    <a href="{% url 'contact' %}" class="ml-auto btn btn-primary">Rent Now</a>
+                </div>{% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

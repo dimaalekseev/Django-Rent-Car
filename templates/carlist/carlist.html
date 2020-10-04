@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content%}
+{% include "partials/_header_internal.html" %}
+{% load static %}
+<div class="site-section bg-light">
+  <div class="container">
+    <div class="row">
+      {% if carlist %}
+      {% for car in carlist %}
+      <!--ітерація, під час якої ми у список carlist будемо записувати кожну нову машину car при додаванні її в БД-->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="item-1">
+          <a href="#"><img src="{{car.photo_main.url}}" alt="{{car.model}}" class="carlist mx-auto d-block"></a>
+          <div class="item-1-contents">
+            <div class="text-center">
+              <h3><a href="{% url 'contact' %}">{{car.vendor}} {{car.model}} </a></h3>
+              <!--{{carlist}} - виводимо весь список машин, {{car.vendor}} - виводимо певну машину по заданому полю-->
+              <div class="rating">
+                {% if car.rating == 1 %}
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                {% elif car.rating == 2 %}
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                {% elif car.rating == 3 %}
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                {% elif car.rating == 4 %}
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                {% elif car.rating == 5 %}
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                <span class="icon-star text-warning"><i class="fas fa-star"></i></span>
+                {% endif %}
+              </div>
+              <div class="rent-price"><span>{{car.price}}/</span>day</div>
+            </div>
+            <ul class="specs">
+              <li>
+                <span>Doors</span>
+                <span class="spec">{{car.doors}}</span>
+              </li>
+              <li>
+                <span>Seats</span>
+                <span class="spec">{{car.seats}}</span>
+              </li>
+              <li>
+                <span>Transmission</span>
+                <span class="spec">{{car.transmission}}</span>
+              </li>
+              <li>
+                <span>Minimum age</span>
+                <span class="spec">{{car.minimum_age}} years</span>
+              </li>
+            </ul>
+            <div class="d-flex action">
+              <a href="{% url 'singlecar' car.id %}" class="btn btn-primary">Rent Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="col">
+        No Cars Available
+      </div>
+      {% endif %}
+
+
+      <div class="col-md-12">
+        {% if carlist.has_other_pages %}
+        <!-- умова, яка виконується, якщо маємо інші сторінки, у випадку коли всі товари не поміщаються на одній-->
+        <nav aria-label="Pagination">
+          <ul class="pagination">
+            {% if carlist.has_previous %}
+            <!-- якщо маємо попередню сторінку, тоді виконується наступний код-->
+            <li class="page-item"><a class="page-link" href="?page={{ carlist.previous_page_number }}">Previous</a></li>
+            <!--в href вказуємо куди посилаємось при натиску-->
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            <!--в іншому випадку неактивна-->
+            {% endif %}
+            {% for i in carlist.paginator.page_range %}
+            <!--ітерацією проходимось по всьому діапазону можливої кількості сторінок пагінації-->
+            {% if carlist.number == i %}
+            <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            <!--вказуємо яка саме ця сторінка за номером і посилаємось на неї і робимо її активною-->
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            <!--в іншому випадку робимо її неактивною-->
+            {% endif %}
+            {% endfor %}
+            {% if carlist.has_next %}
+            <!-- якщо маємо наступну сторінку, тоді виконується наступний код-->
+            <li class="page-item"><a class="page-link" href="?page={{ carlist.next_page_number }}">Next</a>
+              <!--в href вказуємо куди посилаємось при натиску-->
+            </li>
+            {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            <!--в іншому випадку неактивна-->
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container site-section mb-5">
+  <div class="row justify-content-center text-center">
+    <div class="col-7 text-center mb-5">
+      <h2>How it works</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo assumenda, dolorum necessitatibus eius earum
+        voluptates sed!</p>
+    </div>
+  </div>
+  <div class="how-it-works d-flex">
+    <div class="step">
+      <span class="number"><span>01</span></span>
+      <span class="caption">Time &amp; Place</span>
+    </div>
+    <div class="step">
+      <span class="number"><span>02</span></span>
+      <span class="caption">Car</span>
+    </div>
+    <div class="step">
+      <span class="number"><span>03</span></span>
+      <span class="caption">Details</span>
+    </div>
+    <div class="step">
+      <span class="number"><span>04</span></span>
+      <span class="caption">Checkout</span>
+    </div>
+    <div class="step">
+      <span class="number"><span>05</span></span>
+      <span class="caption">Done</span>
+    </div>
+
+  </div>
+</div>
+{%endblock%}

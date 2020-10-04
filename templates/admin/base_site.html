@@ -1,0 +1,10 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block branding %} <!--клас, що відповідає за заголовок адмінки Django-->
+<h1>Admin Area</h1>
+{% endblock %}
+
+{% block extrastyle %} <!--додатковий css файл для нашої адмінки-->
+<link rel="stylesheet" href="{% static 'css/admin.css' %}" />
+{% endblock %}
